@@ -138,7 +138,10 @@ func (s *Server) handleRequest(req *Request, conn conn) error {
 		ctx, req.realDestAddr = s.config.Rewriter.Rewrite(ctx, req)
 
 	}
-	fmt.Println(ctx)
+
+	fmt.Println(req.DestAddr)
+	fmt.Println(req.RemoteAddr)
+	fmt.Println(req.realDestAddr)
 	// Switch on the command
 	switch req.Command {
 	case ConnectCommand:
