@@ -145,6 +145,7 @@ func (s *Server) ServeConn(conn net.Conn) error {
 	}
 
 	request, err := NewRequest(bufConn)
+	fmt.Println(bufConn)
 	fmt.Println(request)
 	if err != nil {
 		if err == unrecognizedAddrType {
