@@ -98,7 +98,6 @@ func New(conf *Config) (*Server, error) {
 
 // ListenAndServe is used to create a listener and serve on it
 func (s *Server) ListenAndServe(network, addr string) error {
-	fmt.Println(network)
 	l, err := net.Listen(network, addr)
 	if err != nil {
 		return err
@@ -110,6 +109,7 @@ func (s *Server) ListenAndServe(network, addr string) error {
 func (s *Server) Serve(l net.Listener) error {
 	for {
 		conn, err := l.Accept()
+		fmt.Println(conn)
 		if err != nil {
 			return err
 		}
