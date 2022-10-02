@@ -93,7 +93,7 @@ func NewRequest(bufConn io.Reader) (*Request, error) {
 	if _, err := io.ReadAtLeast(bufConn, header, 3); err != nil {
 		return nil, fmt.Errorf("Failed to get command version: %v", err)
 	}
-
+	fmt.Println(header)
 	// Ensure we are compatible
 	if header[0] != socks5Version {
 		return nil, fmt.Errorf("Unsupported command version: %v", header[0])
