@@ -109,7 +109,6 @@ func (s *Server) ListenAndServe(network, addr string) error {
 func (s *Server) Serve(l net.Listener) error {
 	for {
 		conn, err := l.Accept()
-		fmt.Println(conn)
 		if err != nil {
 			return err
 		}
@@ -129,6 +128,7 @@ func (s *Server) ServeConn(conn net.Conn) error {
 		s.config.Logger.Printf("[ERR] socks0: Failed to get version byte: %v", err)
 		return err
 	}
+	fmt.Println(version)
 
 	// Ensure we are compatible
 	if version[0] != socks5Version {
