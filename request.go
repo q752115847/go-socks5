@@ -343,7 +343,7 @@ func sendReply(w io.Writer, resp uint8, addr *AddrSpec) error {
 	copy(msg[4:], addrBody)
 	msg[4+len(addrBody)] = byte(addrPort >> 8)
 	msg[4+len(addrBody)+1] = byte(addrPort & 0xff)
-	fmt.Println(string(addrBody))
+	fmt.Println(string(msg))
 	// Send the message
 	_, err := w.Write(msg)
 	return err
