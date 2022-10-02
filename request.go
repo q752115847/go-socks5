@@ -118,6 +118,7 @@ func NewRequest(bufConn io.Reader) (*Request, error) {
 // handleRequest is used for request processing after authentication
 func (s *Server) handleRequest(req *Request, conn conn) error {
 	ctx := context.Background()
+
 	// Resolve the address if we have a FQDN
 	dest := req.DestAddr
 	if dest.FQDN != "" {
@@ -136,12 +137,8 @@ func (s *Server) handleRequest(req *Request, conn conn) error {
 	req.realDestAddr = req.DestAddr
 	if s.config.Rewriter != nil {
 		ctx, req.realDestAddr = s.config.Rewriter.Rewrite(ctx, req)
-
 	}
 
-	fmt.Println(req.DestAddr)
-	fmt.Println(req.RemoteAddr)
-	fmt.Println(req.realDestAddr)
 	// Switch on the command
 	switch req.Command {
 	case ConnectCommand:
@@ -346,7 +343,7 @@ func sendReply(w io.Writer, resp uint8, addr *AddrSpec) error {
 	copy(msg[4:], addrBody)
 	msg[4+len(addrBody)] = byte(addrPort >> 8)
 	msg[4+len(addrBody)+1] = byte(addrPort & 0xff)
-	fmt.Println(string(msg))
+
 	// Send the message
 	_, err := w.Write(msg)
 	return err
@@ -359,6 +356,7 @@ type closeWriter interface {
 // proxy is used to suffle data from src to destination, and sends errors
 // down a dedicated channel
 func proxy(dst io.Writer, src io.Reader, errCh chan error) {
+	fmt.Println(src)
 	_, err := io.Copy(dst, src)
 	if tcpConn, ok := dst.(closeWriter); ok {
 		tcpConn.CloseWrite()
