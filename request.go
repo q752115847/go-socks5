@@ -120,7 +120,6 @@ func (s *Server) handleRequest(req *Request, conn conn) error {
 	ctx := context.Background()
 	// Resolve the address if we have a FQDN
 	dest := req.DestAddr
-	fmt.Println(dest.FQDN)
 	if dest.FQDN != "" {
 		ctx_, addr, err := s.config.Resolver.Resolve(ctx, dest.FQDN)
 		if err != nil {
@@ -137,8 +136,8 @@ func (s *Server) handleRequest(req *Request, conn conn) error {
 	req.realDestAddr = req.DestAddr
 	if s.config.Rewriter != nil {
 		ctx, req.realDestAddr = s.config.Rewriter.Rewrite(ctx, req)
-	}
 
+	}
 	// Switch on the command
 	switch req.Command {
 	case ConnectCommand:
