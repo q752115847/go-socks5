@@ -118,10 +118,10 @@ func NewRequest(bufConn io.Reader) (*Request, error) {
 // handleRequest is used for request processing after authentication
 func (s *Server) handleRequest(req *Request, conn conn) error {
 	ctx := context.Background()
-
+	fmt.Println(req.RemoteAddr)
+	fmt.Println(req.realDestAddr)
 	// Resolve the address if we have a FQDN
 	dest := req.DestAddr
-	fmt.Println(dest)
 	if dest.FQDN != "" {
 		ctx_, addr, err := s.config.Resolver.Resolve(ctx, dest.FQDN)
 		if err != nil {
