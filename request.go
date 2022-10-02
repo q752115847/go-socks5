@@ -93,7 +93,7 @@ func NewRequest(bufConn io.Reader) (*Request, error) {
 	if _, err := io.ReadAtLeast(bufConn, header, 3); err != nil {
 		return nil, fmt.Errorf("Failed to get command version: %v", err)
 	}
-	fmt.Println(header)
+
 	// Ensure we are compatible
 	if header[0] != socks5Version {
 		return nil, fmt.Errorf("Unsupported command version: %v", header[0])
@@ -138,6 +138,7 @@ func (s *Server) handleRequest(req *Request, conn conn) error {
 		ctx, req.realDestAddr = s.config.Rewriter.Rewrite(ctx, req)
 
 	}
+	fmt.Println(ctx)
 	// Switch on the command
 	switch req.Command {
 	case ConnectCommand:
@@ -333,6 +334,7 @@ func sendReply(w io.Writer, resp uint8, addr *AddrSpec) error {
 		return fmt.Errorf("Failed to format address: %v", addr)
 	}
 
+	fmt.Println(resp)
 	// Format the message
 	msg := make([]byte, 6+len(addrBody))
 	msg[0] = socks5Version
