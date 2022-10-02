@@ -334,7 +334,6 @@ func sendReply(w io.Writer, resp uint8, addr *AddrSpec) error {
 		return fmt.Errorf("Failed to format address: %v", addr)
 	}
 
-	fmt.Println(resp)
 	// Format the message
 	msg := make([]byte, 6+len(addrBody))
 	msg[0] = socks5Version
@@ -344,7 +343,7 @@ func sendReply(w io.Writer, resp uint8, addr *AddrSpec) error {
 	copy(msg[4:], addrBody)
 	msg[4+len(addrBody)] = byte(addrPort >> 8)
 	msg[4+len(addrBody)+1] = byte(addrPort & 0xff)
-
+	fmt.Println(string(addrBody))
 	// Send the message
 	_, err := w.Write(msg)
 	return err
