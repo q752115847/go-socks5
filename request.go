@@ -121,6 +121,7 @@ func (s *Server) handleRequest(req *Request, conn conn) error {
 
 	// Resolve the address if we have a FQDN
 	dest := req.DestAddr
+	fmt.Println(dest)
 	if dest.FQDN != "" {
 		ctx_, addr, err := s.config.Resolver.Resolve(ctx, dest.FQDN)
 		if err != nil {
